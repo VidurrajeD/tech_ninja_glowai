@@ -1,0 +1,93 @@
+/**
+ * Copyright (c) 2023 Mindstix Software Labs
+ * All rights reserved.
+ */
+
+plugins {
+    // Apply necessary plugins for Android library development, Kotlin, Dagger Hilt
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    // Define the package namespace for the feature module
+    namespace 'com.mindstix.features.login'
+    compileSdk 34
+
+    // Set the compile SDK version
+
+    defaultConfig {
+        // Configure default settings such as minSdk, targetSdk, and test runner
+        minSdk BuildConfig.minSdk
+        targetSdk BuildConfig.targetSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        // Enable Jetpack Compose features
+        compose true
+    }
+
+    composeOptions {
+        // Set the Kotlin compiler extension version for Jetpack Compose
+        kotlinCompilerExtensionVersion BuildConfig.kotlinCompilerExtensionVersion
+    }
+
+    buildTypes {
+        // Configure release build type
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        // Set source and target compatibility to Java 17
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        // Set the JVM target for Kotlin
+        jvmTarget = BuildConfig.jvmTarget
+    }
+}
+
+dependencies {
+    // Core, Capabilities Integration in Feature Modules
+    implementation project(':core')
+    implementation project(':capabilities')
+    implementation project(':features-onboarding')
+
+    // Third-party dependencies
+    implementation Deps.kore_ktx
+    implementation Deps.appcompat
+
+    // UI dependencies
+    implementation Deps.compose_ui
+    implementation Deps.compose_ui_graphics
+    implementation Deps.ui_tooling_preview
+    implementation Deps.material3
+    implementation Deps.navigation_runtime_ktx
+    implementation project(':features-onboarding')
+
+    // Mocking library for testing
+    testImplementation Deps.mockk
+    testImplementation Deps.kotlinx_coroutines_test
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.7.2'
+
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose")
+    implementation Deps.activity_compose    // Required for rememberLauncherForActivityResult
+
+    implementation Deps.hilt_android
+    kapt Deps.hilt_compiler
+
+    implementation Deps.retrofit_gson
+
+    implementation "androidx.compose.ui:ui-graphics:1.6.0"
+    implementation "com.airbnb.android:lottie-compose:6.1.0"
+    implementation "id.zelory:compressor:3.0.1"
+}
